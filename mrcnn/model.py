@@ -2171,13 +2171,13 @@ class MaskRCNN():
             layer = self.keras_model.get_layer(name)
            # if layer.output in self.keras_model.losses:
               #  continue
-	    isSame=False
-	    for layers in self.keras_model.losses:
-		if tf.keras.backend.equal(layer.output,layers):
-			isSame=True
-			break
-	    if isSame:
-		continue
+            isSame=False
+            for layers in self.keras_model.losses:
+                if tf.keras.backend.equal(layer.output,layers):
+                    isSame=True
+                    break
+            if isSame:
+                continue
 	    
             loss = (
                 tf.reduce_mean(layer.output, keepdims=True)
