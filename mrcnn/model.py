@@ -29,6 +29,7 @@ from mrcnn import utils
 from distutils.version import LooseVersion
 assert LooseVersion(tf.__version__) >= LooseVersion("1.3")
 assert LooseVersion(keras.__version__) >= LooseVersion('2.0.8')
+tf.executing_eagerly()
 
 
 ############################################################
