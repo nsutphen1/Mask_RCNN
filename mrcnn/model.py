@@ -2151,7 +2151,7 @@ class MaskRCNN():
                                 cache_subdir='models',
                                 md5_hash='a268eb855778b3df3c7506639542a6af')
         return weights_path
-    @tf.function
+
     def compile(self, learning_rate, momentum):
         """Gets the model ready for training. Adds losses, regularization, and
         metrics. Then calls the Keras compile() function.
@@ -2169,8 +2169,16 @@ class MaskRCNN():
             "mrcnn_class_loss", "mrcnn_bbox_loss", "mrcnn_mask_loss"]
         for name in loss_names:
             layer = self.keras_model.get_layer(name)
-            if layer.output in self.keras_model.losses:
-                continue
+           # if layer.output in self.keras_model.losses:
+              #  continue
+	    isSame=False
+	    for layers in self.keras_model.losses:
+		if tf.keras.backend.equal(layer.output,layers):
+			isSame=True
+			break
+	    if isSame:
+		continue
+	    
             loss = (
                 tf.reduce_mean(layer.output, keepdims=True)
                 * self.config.LOSS_WEIGHTS.get(name, 1.))
